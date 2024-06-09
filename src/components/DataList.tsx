@@ -15,6 +15,12 @@ export enum FileExtension {
   JPG = 'jpg',
   MKV = 'mkv',
 }
+const files = [
+  { extension: 'txt', name: 'file1' },
+  { extension: 'pdf', name: 'file2' },
+  { extension: 'docx', name: 'file3' },
+
+]
 
 const DataList: React.FC = () => {
   const [dialogOpen, setDialogOpen] = React.useState(false);

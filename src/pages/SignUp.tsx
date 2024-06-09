@@ -4,6 +4,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import useAuth from '../hooks/useAuth';
 import { useAppDispatch } from '../redux/hooks';
 import { createUser } from '../redux/user/slice';
+// import { createUser } from '../services/user'
 
 const SignUp: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -15,15 +16,17 @@ const SignUp: React.FC = () => {
     }
   }, [isAuth, navigate]);
 
-  const handleSignUp = (event: React.FormEvent<HTMLFormElement>) => {
+  const handleSignUp = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     try {
       const form = event.target as HTMLFormElement;
       const username = form.username.value;
       const password = form.password.value;
-      dispatch(createUser({ username, password }));
+      // const res = await createUser({ name: username, password, email: 'asdsa@gmail.com' })
+      dispatch(createUser({ name: username, password, email: 'asdsa@gmail.com' }));
+      // console.log(res)
     } catch (error) {
-      console.log(error);
+      console.error(error);
     }
   };
 

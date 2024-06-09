@@ -6,8 +6,9 @@ import { login as loginUser } from '../../services/auth';
 export const createUser = createAsyncThunk<void, UserCredentials>(
   'user/createUser',
   async (newUserParams, { dispatch }) => {
-    await createUserService(newUserParams);
-    dispatch(logIn({ username: newUserParams.username, password: newUserParams.password }));
+    const token = (await createUserService(newUserParams)).token
+    console.log(token)
+    dispatch(setUser({ username: newUserParams.name, token }))
   },
 );
 
@@ -22,7 +23,7 @@ export const logIn = createAsyncThunk<void, UserCredentials>(
 const initialState: User = {
   username: null,
   token: null,
-  id: null,
+
 };
 const userSlice = createSlice({
   name: 'user',
@@ -31,12 +32,12 @@ const userSlice = createSlice({
     setUser(state, action: PayloadAction<User>) {
       state.username = action.payload.username;
       state.token = action.payload.token;
-      state.id = action.payload.id;
+
     },
     removeUser(state) {
       state.username = null;
       state.token = null;
-      state.id = null;
+
     },
   },
 });
