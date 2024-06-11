@@ -6,7 +6,7 @@ interface FormInputProps extends React.ComponentPropsWithoutRef<'input'> {
   name: string;
 }
 
-const FormInput: React.FC<FormInputProps> = ({ name, className, ...rest }) => {
+const FormInput: React.FC<FormInputProps> = ({ name, className, children, ...rest }) => {
   const formContext = React.useContext(FormContext);
 
   if (!formContext) {
@@ -16,13 +16,16 @@ const FormInput: React.FC<FormInputProps> = ({ name, className, ...rest }) => {
   const { values, setFieldValue } = formContext;
 
   return (
-    <input
-      {...rest}
-      name={name}
-      value={values[name] || ''}
-      onChange={(e) => setFieldValue(name, e.target.value)}
-      className={classNames('', className)}
-    />
+    <div className="flex flex-row items-center gap-4">
+      {children}
+      <input
+        {...rest}
+        name={name}
+        value={values[name] || ''}
+        onChange={(e) => setFieldValue(name, e.target.value)}
+        className={classNames('shadow-md', className)}
+      />
+    </div>
   );
 };
 

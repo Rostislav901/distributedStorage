@@ -14,7 +14,7 @@ const Data: React.FC = () => {
   }, [isAuth, navigate]);
 
   return isAuth ? (
-    <div className={`px-40 mt-10`}>
+    <div className={`mx-80 mt-10`}>
       <NewData />
       <DataList />
     </div>

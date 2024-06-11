@@ -1,44 +1,76 @@
 import { PayloadAction, createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { UserCredentials, User } from './types';
+import { UserCredentials, User, OmittedUser } from './types';
 import { createUser as createUserService } from '../../services/user';
-import { login as loginUser } from '../../services/auth';
+import { login as loginUserService } from '../../services/auth';
+import { LoadingStatus } from '../data/slice';
 
-export const createUser = createAsyncThunk<void, UserCredentials>(
+export const createUser = createAsyncThunk<OmittedUser, UserCredentials>(
   'user/createUser',
-  async (newUserParams, { dispatch }) => {
-    const token = (await createUserService(newUserParams)).token
-    console.log(token)
-    dispatch(setUser({ username: newUserParams.name, token }))
+  async (newUserParams) => {
+    const token = (await createUserService(newUserParams)).token;
+    return { token, name: newUserParams.name };
   },
 );
 
-export const logIn = createAsyncThunk<void, UserCredentials>(
+export const logIn = createAsyncThunk<OmittedUser, UserCredentials>(
   'user/logIn',
-  async (credentials, { dispatch }) => {
-    const user = await loginUser(credentials);
-    dispatch(setUser(user));
+  async (credentials) => {
+    const token = (await loginUserService(credentials)).token;
+    // dispatch(setUser({ name: credentials.name, token }));
+    return { token, name: credentials.name };
   },
 );
 
 const initialState: User = {
-  username: null,
+  name: null,
   token: null,
-
+  loading: LoadingStatus.IDLE,
 };
 const userSlice = createSlice({
   name: 'user',
   initialState,
   reducers: {
     setUser(state, action: PayloadAction<User>) {
-      state.username = action.payload.username;
+      state.name = action.payload.name;
       state.token = action.payload.token;
-
     },
     removeUser(state) {
-      state.username = null;
+      state.name = null;
       state.token = null;
-
     },
+  },
+  extraReducers: (builder) => {
+    builder.addCase(logIn.pending, (state) => {
+      state.name = null;
+      state.token = null;
+      state.loading = LoadingStatus.PENDING;
+    });
+    builder.addCase(logIn.fulfilled, (state, action) => {
+      state.name = action.payload.name;
+      state.token = action.payload.token;
+      state.loading = LoadingStatus.FULFILLED;
+    });
+    builder.addCase(logIn.rejected, (state) => {
+      state.name = null;
+      state.token = null;
+      state.loading = LoadingStatus.REJECTED;
+    });
+
+    builder.addCase(createUser.pending, (state) => {
+      state.name = null;
+      state.token = null;
+      state.loading = LoadingStatus.PENDING;
+    });
+    builder.addCase(createUser.fulfilled, (state, action) => {
+      state.name = action.payload.name;
+      state.token = action.payload.token;
+      state.loading = LoadingStatus.FULFILLED;
+    });
+    builder.addCase(createUser.rejected, (state) => {
+      state.name = null;
+      state.token = null;
+      state.loading = LoadingStatus.REJECTED;
+    });
   },
 });
 
