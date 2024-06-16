@@ -19,6 +19,7 @@ const NewData: React.FC = () => {
     const title = form.eventTitle.value;
     const description = form.eventDescription.value;
     const location = form.eventLocation.value;
+    // @ts-ignore
     const file = formData.get('eventFile');
     const startTime = form.startTime.value;
     const endTime = form.endTime.value;
@@ -34,7 +35,7 @@ const NewData: React.FC = () => {
       {visible ? (
         <>
           <button
-            className="flex mx-52 px-2 py-2 bg-gray-900 hover:bg-gray-800 transition-all	duration-200	ease-in-out text-gray-300 rounded-xl w-20 items-center justify-center shadow-custom"
+            className="flex px-2 py-2 bg-gray-900 hover:bg-gray-800 transition-all	duration-200	ease-in-out text-gray-300 rounded-xl w-20 items-center justify-center shadow-custom"
             onClick={() => {
               setVisible(false);
             }}>

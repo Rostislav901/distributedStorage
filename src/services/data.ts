@@ -1,6 +1,6 @@
 import axios from 'axios';
 import FormData from 'form-data';
-const baseUrl = 'http://192.168.0.103:8001/main-server/v1/data';
+const baseUrl = 'http://192.168.0.104:8001/main-server/v1/data';
 
 ('delete/{eventTitle}/{fileId}');
 
