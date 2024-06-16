@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Application\ArgumentResolver;
+namespace App\Shared\Application\ArgumentResolver;
 
-use App\Application\Attribute\RequestBody;
-use App\Application\Exception\RequestBodyConvertException;
-use App\Application\Exception\ValidationException;
+use App\Shared\Application\Attribute\RequestBody;
+use App\Shared\Application\Exception\RequestBodyConvertException;
+use App\Shared\Application\Exception\ValidationException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Controller\ValueResolverInterface;
 use Symfony\Component\HttpKernel\ControllerMetadata\ArgumentMetadata;
@@ -26,12 +26,11 @@ class RequestBodyArgumentResolver implements ValueResolverInterface
 
         try {
             $model = $this->serializer->deserialize(
-                $request->getContent(),
+                json_encode($request->request->all()),
                 $argument->getType(),
                 JsonEncoder::FORMAT,
             );
         } catch (\Throwable $throwable) {
-            echo $throwable->getMessage();
             throw new RequestBodyConvertException($throwable);
         }
 

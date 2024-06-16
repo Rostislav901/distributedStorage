@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Application\DTO;
+namespace App\Shared\Application\DTO;
 
 class ErrorValidationDetails
 {

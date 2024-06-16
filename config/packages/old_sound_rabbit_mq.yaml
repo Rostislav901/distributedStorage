@@ -1,0 +1,26 @@
+old_sound_rabbit_mq:
+    connections:
+        default:
+            url: '%env(RABBITMQ_URL)%'
+            vhost: '/'
+            lazy: false
+            connection_timeout: 3
+            read_write_timeout: 3
+            keepalive: false
+            heartbeat: 60  # Установка интервала heartbeat
+            use_socket: true
+
+    producers:
+
+            send_all_eventData_relation:
+                connection: default
+                exchange_options: { name: 'event.all_data_relation', type: direct }
+                queue_options: { name: 'event.all_data_relation_queue' }
+
+    consumers:
+
+            handle_all_eventData_relation:
+                connection: default
+                exchange_options: { name: 'event.all_data_relation', type: direct }
+                queue_options: { name: 'event.all_data_relation_queue' }
+                callback: storage.app.amqp.consumer.all_event_data_relation_consumer

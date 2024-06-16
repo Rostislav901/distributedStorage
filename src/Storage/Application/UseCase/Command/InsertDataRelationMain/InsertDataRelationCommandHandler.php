@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Storage\Application\UseCase\InsertDataRelationMain;
+namespace App\Storage\Application\UseCase\Command\InsertDataRelationMain;
 
 use App\Shared\Application\Command\CommandHandlerInterface;
 use App\Storage\Domain\Service\EventEntityMaker;
@@ -22,7 +22,9 @@ class InsertDataRelationCommandHandler implements CommandHandlerInterface
             startTime: $data->startTime,
             endTime: $data->endTime,
             fileName: $data->fileName,
-            creator_ulid: $data->user_ulid
+            creator_ulid: $data->user_ulid,
+            fileId: $data->fileId,
+            filesize: $data->filesize
         );
     }
 }

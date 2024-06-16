@@ -1,30 +1,33 @@
 <?php
 
-namespace App\Storage\Domain\Document\Data;
-use App\Storage\Infrastructure\Repository\DataDocumentRepository;
+namespace App\Storage\Domain\Document;
+
+use App\Storage\Domain\Repository\EventDataDocumentRepositoryInterface;
 use Doctrine\ODM\MongoDB\Mapping\Annotations as ODM;
-#[ODM\Document(db: 'data', collection: 'main_events', repositoryClass: DataDocumentRepository::class)]
+
+#[ODM\Document(db: 'data', collection: 'main_events', repositoryClass: EventDataDocumentRepositoryInterface::class)]
 #[ODM\HasLifecycleCallbacks]
 class Event
 {
     #[ODM\Id]
     private string $id;
-    #[ODM\Field( type: 'string')]
+    #[ODM\Field(type: 'string')]
     private string $title;
 
-    #[ODM\Field( type: 'string')]
+    #[ODM\Field(type: 'string')]
     private string $description;
 
-    #[ODM\Field( type: 'string')]
+    #[ODM\Field(type: 'string')]
     private string $location;
-    #[ODM\Field( type: 'date')]
+    #[ODM\Field(type: 'date')]
     private \DateTime $startTime;
-    #[ODM\Field( type: 'date')]
+    #[ODM\Field(type: 'date')]
     private \DateTime $endTime;
-    #[Odm\Field( type: 'string')]
+    #[ODM\Field(type: 'string')]
     private string $user_ulid;
-    #[ODM\Field( type: 'date')]
+    #[ODM\Field(type: 'date')]
     private \DateTime $createdAt;
+
     public function getId(): string
     {
         return $this->id;
@@ -33,6 +36,7 @@ class Event
     public function setId(string $id): self
     {
         $this->id = $id;
+
         return $this;
     }
 
@@ -44,6 +48,7 @@ class Event
     public function setTitle(string $title): self
     {
         $this->title = $title;
+
         return $this;
     }
 
@@ -55,6 +60,7 @@ class Event
     public function setDescription(string $description): self
     {
         $this->description = $description;
+
         return $this;
     }
 
@@ -66,6 +72,7 @@ class Event
     public function setLocation(string $location): self
     {
         $this->location = $location;
+
         return $this;
     }
 
@@ -77,6 +84,7 @@ class Event
     public function setStartTime(\DateTime $startTime): self
     {
         $this->startTime = $startTime;
+
         return $this;
     }
 
@@ -88,6 +96,7 @@ class Event
     public function setEndTime(\DateTime $endTime): self
     {
         $this->endTime = $endTime;
+
         return $this;
     }
 
@@ -99,14 +108,15 @@ class Event
     public function setUserUlid(string $user_ulid): self
     {
         $this->user_ulid = $user_ulid;
+
         return $this;
     }
-
 
     public function getCreatedAt(): \DateTime
     {
         return $this->createdAt;
     }
+
     #[ODM\PrePersist]
     public function setCreatedAtValue(): void
     {

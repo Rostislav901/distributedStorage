@@ -2,7 +2,6 @@
 
 namespace App\Shared\Application\Query;
 
-interface QueryInterface
+interface QueryHandlerInterface
 {
-
 }

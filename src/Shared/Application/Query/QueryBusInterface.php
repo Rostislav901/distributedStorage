@@ -2,7 +2,7 @@
 
 namespace App\Shared\Application\Query;
 
-interface QueryInterface
+interface QueryBusInterface
 {
-
+    public function execute(QueryInterface $query): mixed;
 }

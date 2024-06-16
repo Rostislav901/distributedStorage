@@ -2,10 +2,9 @@
 
 namespace App\Storage\Domain\File;
 
-class VideoMOVFile extends AbstractBaseFile
+class VideoAVIFile extends AbstractBaseFile
 {
-
-    function getContent(): string
+    public function getContent(): string
     {
         // TODO: Implement getContent() method.
     }

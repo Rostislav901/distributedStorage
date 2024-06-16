@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Storage\Application\UseCase\InsertDataRelationMain;
+namespace App\Storage\Application\UseCase\Command\InsertDataRelationMain;
 
 use App\Shared\Application\Command\CommandInterface;
 use App\Storage\Application\DTO\RelationDataDTO;

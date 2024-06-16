@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Application\Attribute;
+namespace App\Shared\Application\Attribute;
 
 #[\Attribute(\Attribute::TARGET_PARAMETER)]
 class RequestBody

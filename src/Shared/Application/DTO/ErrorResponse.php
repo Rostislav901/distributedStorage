@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Application\DTO;
+namespace App\Shared\Application\DTO;
 
 class ErrorResponse
 {
@@ -12,7 +12,6 @@ class ErrorResponse
     {
         return $this->message;
     }
-
 
     public function getDetails(): mixed
     {

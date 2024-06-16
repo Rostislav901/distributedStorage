@@ -1,11 +1,10 @@
 <?php
 
-namespace App\Data\Domain\File;
+namespace App\Storage\Domain\File;
 
 class ExtNotFoundFile extends AbstractBaseFile
 {
-
-    function getContent(): string
+    public function getContent(): string
     {
         return 'not found';
     }

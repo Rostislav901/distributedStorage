@@ -4,7 +4,7 @@ namespace App\Shared\Application\DTO;
 
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
-class FileDTO
+class FileModel
 {
     public function __construct(public UploadedFile $file)
     {

@@ -1,19 +1,39 @@
 doctrine_mongodb:
-  auto_generate_proxy_classes: true
-  auto_generate_hydrator_classes: true
-  connections:
-    default:
-      server: '%env(resolve:MONGODB_URL)%'
-      options: {}
-  default_database: '%env(resolve:MONGODB_DB)%'
-  document_managers:
-    default:
-      metadata_cache_driver: ~
-      auto_mapping: true
-      mappings:
-        App:
-          is_bundle: false
-          type: annotation
-          dir: '%kernel.project_dir%/src/Document'
-          prefix: 'App\Document'
-          alias: App
+    auto_generate_proxy_classes: true
+    auto_generate_hydrator_classes: true
+    connections:
+        default:
+            server: '%env(resolve:MONGODB_URL)%'
+        customer:
+            server: '%env(resolve:MONGODB_URL_CUSTOMER)%'
+    default_document_manager: default
+    document_managers:
+        default:
+            connection: default
+            mappings:
+                Data:
+                    dir: '%kernel.project_dir%/src/Storage/Domain/Document'
+                    prefix: 'App\Storage\Domain\Document'
+
+#        customer:
+#            connection: customer
+#            mappings:
+#                Data:
+#                    dir: '%kernel.project_dir%/src/Storage/Domain/Document/DataReserve'
+#                    prefix: 'App\Storage\Domain\Document\DataReserve'
+
+when@prod:
+    doctrine_mongodb:
+        auto_generate_proxy_classes: false
+        auto_generate_hydrator_classes: false
+        document_managers:
+            default:
+                metadata_cache_driver:
+                    type: service
+                    id: doctrine_mongodb.system_cache_pool
+
+    framework:
+        cache:
+            pools:
+                doctrine_mongodb.system_cache_pool:
+                    adapter: cache.system

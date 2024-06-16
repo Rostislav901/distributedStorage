@@ -1,14 +1,11 @@
 <?php
 
-namespace App\Data\Domain\File;
+namespace App\Storage\Domain\File;
 
 class TxtFile extends AbstractBaseFile
 {
-
-    function getContent(): string
+    public function getContent(): string
     {
-        $file = $this->fileContent;
-        $encoding = mb_detect_encoding($file, 'auto');
-        return mb_convert_encoding(file_get_contents($file), 'UTF-8', $encoding);
+        // TODO: Implement getContent() method.
     }
 }

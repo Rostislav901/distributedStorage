@@ -2,7 +2,14 @@
 
 namespace App\User\Application\UseCase\Command\UserRegistration;
 
-class UserRegistrationCommand
-{
+use App\Shared\Application\Command\CommandInterface;
 
+class UserRegistrationCommand implements CommandInterface
+{
+    public function __construct(
+        public readonly string $nickname,
+        public readonly string $email,
+        public readonly string $password)
+    {
+    }
 }

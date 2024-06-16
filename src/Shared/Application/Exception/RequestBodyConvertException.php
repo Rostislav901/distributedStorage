@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Application\Exception;
+namespace App\Shared\Application\Exception;
 
 class RequestBodyConvertException extends \RuntimeException
 {

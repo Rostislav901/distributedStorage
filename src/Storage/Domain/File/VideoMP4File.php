@@ -2,10 +2,9 @@
 
 namespace App\Storage\Domain\File;
 
-class PngFile extends AbstractBaseFile
+class VideoMP4File extends AbstractBaseFile
 {
-
-    function getContent(): string
+    public function getContent(): string
     {
         // TODO: Implement getContent() method.
     }

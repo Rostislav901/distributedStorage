@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Application\DTO;
+namespace App\User\Application\DTO;
 
 use Symfony\Component\Validator\Constraints\Email;
 use Symfony\Component\Validator\Constraints\Length;
@@ -10,11 +10,12 @@ class UserRegisterDTO
 {
     #[NotBlank]
     #[Email]
+    #[Length(max: 255)]
     public string $email;
     #[NotBlank]
-    #[Length(min: 3,max: 23)]
+    #[Length(min: 5, max: 20)]
     public string $name;
     #[NotBlank]
-    #[Length(min: 3,max: 23)]
+    #[Length(min: 8, max: 50)]
     public string $password;
 }

@@ -2,7 +2,8 @@
 
 namespace App\Storage\Application\UseCase\Query\FindAllEventsByUser;
 
-class FindAllEventsByUserQuery
-{
+use App\Shared\Application\Query\QueryInterface;
 
+class FindAllEventsByUserQuery implements QueryInterface
+{
 }

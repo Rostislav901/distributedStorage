@@ -4,12 +4,17 @@
 # Put parameters here that don't need to change on each machine where the app is deployed
 # https://symfony.com/doc/current/best_practices.html#use-parameters-for-application-configuration
 parameters:
+    exceptions:
+        Symfony\Component\HttpKernel\Exception\NotFoundHttpException: { code: 404 }
+
 
 services:
     # default configuration for services in *this* file
     _defaults:
         autowire: true      # Automatically injects dependencies in your services.
         autoconfigure: true # Automatically registers your services as commands, event subscribers, etc.
+        bind:
+            bool $isDebug: '%kernel.debug%'
 
     # makes classes in src/ available to be used as services
     # this creates a service per class whose id is the fully-qualified class name
@@ -20,5 +25,45 @@ services:
             - '../src/Entity/'
             - '../src/Kernel.php'
 
-    # add more service definitions when explicit configuration is needed
-    # please note that last definitions always *replace* previous ones
+
+    App\Shared\Application\EventHandler\ExceptionHandler\ExceptionMappingResolver:
+        arguments: [ '%exceptions%' ]
+
+    App\Shared\Application\Listener\ExceptionListener\ApiExceptionListener:
+            tags:
+                - { name: kernel.event_listener, event: kernel.exception, priority: 10 }
+
+    App\Shared\Application\Listener\ExceptionListener\ValidationExceptionListener:
+            tags:
+                - { name: kernel.event_listener, event: kernel.exception, priority: 15 }
+
+    _instanceof:
+        App\Shared\Application\Command\CommandHandlerInterface:
+            tags:
+                - { name: messenger.message_handler, bus: command_bus }
+
+        App\Shared\Application\Query\QueryHandlerInterface:
+            tags:
+                - { name: messenger.message_handler, bus: query_bus }
+
+    storage.app.amqp.consumer.all_event_data_relation_consumer:
+        class: App\Storage\Application\Amqp\Consumer\AllEventDataRelationConsumer
+
+
+    custom_messenger.middleware:
+        class: App\Shared\Application\Middleware\CustomExceptionHandlerMiddleware
+
+    App\Storage\Infrastructure\Repository\EventDataDocumentRepository:
+            factory: [ '@doctrine_mongodb.odm.document_manager', getRepository ]
+            arguments:
+                - App\Data\Domain\Document\Data\Data
+
+
+    App\Storage\Infrastructure\Http\Controller\DataController:
+#        arguments:
+#            $repository: '@App\Data\Infrastructure\Repository\DataDocumentRepository'
+
+#    App\Service\UserService:
+#            arguments:
+#                - '@App\Repository\UserRepository'
+#                - '@doctrine_mongodb.odm.document_manager'

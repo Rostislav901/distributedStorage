@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Storage\Application\UseCase\InsertDataMongoMain;
+namespace App\Storage\Application\UseCase\Command\InsertDataMongoMain;
 
 use App\Shared\Application\Command\CommandHandlerInterface;
-use App\Storage\Application\Amqp\Publisher\PublishService;
-use App\Storage\Application\Transformer\DataTransformer;
+use App\Storage\Application\Amqp\Publisher\EventDataPublisher;
+use App\Storage\Application\Transformer\EventDataTransformer;
 use App\Storage\Domain\Service\EventDocumentMaker;
 use App\Storage\Domain\Service\EventFileMaker;
 
@@ -12,30 +12,30 @@ class InsertDataCommandHandler implements CommandHandlerInterface
 {
     public function __construct(
         private readonly EventDocumentMaker $documentMaker,
-        private readonly DataTransformer $dataTransformer,
+        private readonly EventDataTransformer $dataTransformer,
         private readonly EventFileMaker $eventFileMaker,
-        private readonly PublishService $publishService,
-    )
-    {
+        private readonly EventDataPublisher $eventDataPublisher,
+    ) {
     }
 
-
-    public function __invoke(InsertDataCommand $insertDataCommand) : void
+    public function __invoke(InsertDataCommand $insertDataCommand): void
     {
         $eventData = $insertDataCommand->dataRequestDTO;
-        $eventId =  $this->documentMaker->makeEventDocument(
+        $fileData = $insertDataCommand->file;
+
+        $eventId = $this->documentMaker->makeEventDocument(
             title: $eventData->title,
             description: $eventData->description,
             location: $eventData->location,
             startTime: $eventData->getStartTimeValue(),
             endTime: $eventData->getEndTimeValue(),
         );
-        $this->eventFileMaker->makeEventFile($eventId,$insertDataCommand->file->getFilePath(),$insertDataCommand->file->getFileName());
 
-        $this->publishService->forRelationReplication(
+        $fileId = $this->eventFileMaker->makeEventFile($eventId, $fileData->getFilePath(), $fileData->getFileName());
+
+        $this->eventDataPublisher->forRelationReplication(
             $this->dataTransformer->fromDataRequestToRelationDTO(
-                $eventData, $insertDataCommand->file
+                $eventData, $insertDataCommand->file, $fileId
             ));
-
     }
 }

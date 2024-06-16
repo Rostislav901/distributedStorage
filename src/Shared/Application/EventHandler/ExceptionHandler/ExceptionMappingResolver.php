@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Application\EventHandler\ExceptionHandler;
+namespace App\Shared\Application\EventHandler\ExceptionHandler;
 
 class ExceptionMappingResolver
 {

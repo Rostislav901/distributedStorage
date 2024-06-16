@@ -2,7 +2,7 @@
 
 namespace App\Storage\Domain\Repository;
 
-interface DataDocumentRepositoryInterface
+interface EventDataDocumentRepositoryInterface
 {
     public function deleteByTitleAndUserUlid(string $title, string $userUlid): void;
 }

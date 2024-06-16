@@ -2,7 +2,7 @@
 
 namespace App\Shared\Application\Command;
 
-interface CommandInterface
+interface CommandBusInterface
 {
-
+    public function execute(CommandInterface $command): mixed;
 }

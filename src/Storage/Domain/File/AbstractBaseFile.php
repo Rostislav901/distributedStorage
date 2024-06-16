@@ -1,30 +1,32 @@
 <?php
 
-namespace App\Data\Domain\File;
+namespace App\Storage\Domain\File;
 
 abstract class AbstractBaseFile
 {
     protected string $fileName;
-    protected string $fileContent;
+    protected string $filePath;
     protected string $mimeType;
+    protected string $fileSize;
 
-    public function __construct(string $fileName, string $fileContent, string $mimeType)
+    public function __construct(string $fileName, string $filePath, string $mimeType, string $fileSize)
     {
         $this->fileName = $fileName;
-        $this->fileContent = $fileContent;
+        $this->filePath = $filePath;
         $this->mimeType = $mimeType;
+        $this->fileSize = $fileSize;
     }
 
-    abstract function getContent(): string;
+    abstract public function getContent(): string;
 
     public function getFileName(): string
     {
         return $this->fileName;
     }
 
-    public function getFileContent(): string
+    public function getFilePath(): string
     {
-        return $this->fileContent;
+        return $this->filePath;
     }
 
     public function getMimeType(): string
@@ -32,4 +34,8 @@ abstract class AbstractBaseFile
         return $this->mimeType;
     }
 
+    public function getFileSize(): string
+    {
+        return $this->fileSize;
+    }
 }

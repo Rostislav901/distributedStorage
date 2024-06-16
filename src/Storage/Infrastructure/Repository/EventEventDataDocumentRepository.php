@@ -3,13 +3,13 @@
 namespace App\Storage\Infrastructure\Repository;
 
 use App\Storage\Domain\Document\Event;
-use App\Storage\Domain\Repository\DataDocumentRepositoryInterface;
+use App\Storage\Domain\Repository\EventDataDocumentRepositoryInterface;
 use Doctrine\ODM\MongoDB\DocumentManager;
 use Doctrine\ODM\MongoDB\Mapping\ClassMetadata;
 use Doctrine\ODM\MongoDB\Repository\DocumentRepository;
 use Doctrine\ODM\MongoDB\UnitOfWork;
 
-class EventDataDocumentRepository extends DocumentRepository implements DataDocumentRepositoryInterface
+class EventEventDataDocumentRepository extends DocumentRepository implements EventDataDocumentRepositoryInterface
 {
     public function __construct(DocumentManager $dm, UnitOfWork $uow)
     {
@@ -18,10 +18,10 @@ class EventDataDocumentRepository extends DocumentRepository implements DataDocu
 
     public function deleteByTitleAndUserUlid(string $title, string $userUlid): void
     {
-         $event = $this->findOneBy(['title' => $title, 'user_ulid' => $userUlid]);
-         if ($event) {
-             $this->dm->remove($event);
-             $this->dm->flush();
-         }
+        $event = $this->findOneBy(['title' => $title, 'user_ulid' => $userUlid]);
+        if ($event) {
+            $this->dm->remove($event);
+            $this->dm->flush();
+        }
     }
 }

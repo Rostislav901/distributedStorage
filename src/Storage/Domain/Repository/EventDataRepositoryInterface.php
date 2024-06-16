@@ -4,12 +4,11 @@ namespace App\Storage\Domain\Repository;
 
 use App\Storage\Domain\Entity\Event;
 
-interface DataRepositoryInterface
+interface EventDataRepositoryInterface
 {
     public function add(Event $data): string; // return ulid
 
     /**
-     * @param string $creator_ulid
      * @return Event[]
      */
     public function getAllEventsByCreatorUlid(string $creator_ulid): array;

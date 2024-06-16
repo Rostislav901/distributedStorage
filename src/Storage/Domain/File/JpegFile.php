@@ -1,11 +1,10 @@
 <?php
 
-namespace App\Data\Domain\File;
+namespace App\Storage\Domain\File;
 
 class JpegFile extends AbstractBaseFile
 {
-
-    function getContent(): string
+    public function getContent(): string
     {
         // TODO: Implement getContent() method.
     }

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Domain\Entity;
+namespace App\User\Domain\Entity;
 
 use App\Shared\Domain\Service\UlidService;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
@@ -19,7 +19,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private array $roles = ['ROLE_USER'];
     private \DateTimeImmutable $createdAt;
 
-    public function __construct(string $name,string $email)
+    public function __construct(string $name, string $email)
     {
         $this->ulid = UlidService::ulid();
         $this->email = $email;
@@ -55,7 +55,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         $this->password = $hasher->hashPassword($this, $password);
     }
-
 
     public function getName(): string
     {

@@ -1,21 +1,23 @@
 <?php
 
-namespace App\Infrastructure\Security;
-use App\Domain\Entity\User;
+namespace App\Shared\Infrastructure\Security;
+
+use App\Shared\Domain\Security\UserFetcherInterface;
 use Symfony\Bundle\SecurityBundle\Security;
-class UserFetcher
+use Symfony\Component\Security\Core\User\UserInterface;
+
+class UserFetcher implements UserFetcherInterface
 {
     public function __construct(private readonly Security $security)
     {
     }
 
-    public function getUserAuth(): User
+    public function getUser(): UserInterface
     {
         /**
-         * @var User $user
+         * @var UserInterface $user
          */
         $user = $this->security->getUser();
-
 
         return $user;
     }

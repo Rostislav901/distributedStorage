@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Application\Listener\ExceptionListener;
+namespace App\Shared\Application\Listener\ExceptionListener;
 
-use App\Application\DTO\ErrorResponse;
-use App\Application\DTO\ErrorValidationDetails;
-use App\Application\Exception\ValidationException;
+use App\Shared\Application\DTO\ErrorResponse;
+use App\Shared\Application\DTO\ErrorValidationDetails;
+use App\Shared\Application\Exception\ValidationException;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Event\ExceptionEvent;

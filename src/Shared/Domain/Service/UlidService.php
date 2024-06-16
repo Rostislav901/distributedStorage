@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Domain\Service;
+namespace App\Shared\Domain\Service;
 
 use Symfony\Component\Uid\Ulid;
 
@@ -8,6 +8,6 @@ class UlidService
 {
     public static function ulid(): string
     {
-        return  Ulid::generate();
+        return Ulid::generate();
     }
 }

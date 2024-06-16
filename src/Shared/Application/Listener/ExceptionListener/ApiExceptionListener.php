@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Application\Listener\ExceptionListener;
+namespace App\Shared\Application\Listener\ExceptionListener;
 
-use App\Application\DTO\ErrorDebugDetails;
-use App\Application\DTO\ErrorResponse;
-use App\Application\EventHandler\ExceptionHandler\ExceptionMapping;
-use App\Application\EventHandler\ExceptionHandler\ExceptionMappingResolver;
+use App\Shared\Application\DTO\ErrorDebugDetails;
+use App\Shared\Application\DTO\ErrorResponse;
+use App\Shared\Application\EventHandler\ExceptionHandler\ExceptionMapping;
+use App\Shared\Application\EventHandler\ExceptionHandler\ExceptionMappingResolver;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;

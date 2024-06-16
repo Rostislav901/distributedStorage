@@ -5,51 +5,21 @@ namespace App\Storage\Application\Transformer;
 use App\Shared\Domain\Security\UserFetcherInterface;
 use App\Storage\Application\DTO\DataRequestDTO;
 use App\Storage\Application\DTO\EventResponseItemDTO;
-use App\Storage\Application\DTO\EventResponseListDTO;
-use App\Storage\Application\DTO\FileDataDTO;
 use App\Storage\Application\DTO\RelationDataDTO;
-use App\Storage\Application\DTO\StorageFileModel;
-use App\Storage\Domain\Entity\Data\Event;
-use App\Storage\Domain\Entity\DataReserve\DataReserve;
+use App\Storage\Domain\Entity\Event;
 use App\Storage\Domain\File\AbstractBaseFile;
 
-class DataTransformer
+class EventDataTransformer
 {
     public function __construct(private readonly UserFetcherInterface $userFetcher)
     {
     }
 
-    /**
-     * @param Event[]|DataReserve[] $entities
-     * @return EventResponseItemDTO[]
-     */
-
-    public function fromEntityListToDTOList(array $entities): array
+    public function fromDataRequestToRelationDTO(
+        DataRequestDTO $dataRequestDTO,
+        AbstractBaseFile $fileDataDTO, string $fileId): RelationDataDTO
     {
-        $res = [];
-         foreach ($entities as $entity)
-         {
-            $res[] = $this->formEntityToResponseDTO($entity);
-         }
-
-         return $res;
-    }
-
-
-    public function formEntityToResponseDTO(Event|DataReserve $data): EventResponseListDTO
-    {
-         return new EventResponseListDTO($data->getUlid(),$data->getName(),$data->getPassword(),$data->getUserdata());
-    }
-
-    public function fromResponseToRequestDTO(EventResponseListDTO $dataResponseDTO): DataRequestDTO
-    {
-        return  new DataRequestDTO($dataResponseDTO->name,$dataResponseDTO->password,$dataResponseDTO->data);
-    }
-
-
-    public function fromDataRequestToRelationDTO(DataRequestDTO $dataRequestDTO,AbstractBaseFile $fileDataDTO,string $fileId): RelationDataDTO
-    {
-        return  new RelationDataDTO(
+        return new RelationDataDTO(
             title: $dataRequestDTO->title,
             fileId: $fileId,
             description: $dataRequestDTO->description,
@@ -68,25 +38,25 @@ class DataTransformer
     public function fromEntityListToResponseListDTO(array $entityList): array
     {
         $res = [];
-        foreach ($entityList as $entity)
-        {
-              $res[] = $this->fromEntityToResponseDTO($entity);
+        foreach ($entityList as $entity) {
+            $res[] = $this->fromEntityToResponseDTO($entity);
         }
+
         return $res;
     }
 
     public function fromEntityToResponseDTO(Event $event_entity): EventResponseItemDTO
     {
-          return  new EventResponseItemDTO(
-              title: $event_entity->getTitle(),
-              description: $event_entity->getDescription(),
-              location: $event_entity->getLocation(),
-              startTime: $event_entity->getStartTime(),
-              endTime: $event_entity->getEndTime(),
-              createdAt: $event_entity->getCreatedAt()->getTimestamp(),
-              fileName: $event_entity->getFileName(),
-              fileId: $event_entity->getFileId(),
-              filesize: $event_entity->getFilesize()
-          );
+        return new EventResponseItemDTO(
+            title: $event_entity->getTitle(),
+            description: $event_entity->getDescription(),
+            location: $event_entity->getLocation(),
+            startTime: $event_entity->getStartTime(),
+            endTime: $event_entity->getEndTime(),
+            createdAt: $event_entity->getCreatedAt()->getTimestamp(),
+            fileName: $event_entity->getFileName(),
+            fileId: $event_entity->getFileId(),
+            filesize: $event_entity->getFilesize()
+        );
     }
 }

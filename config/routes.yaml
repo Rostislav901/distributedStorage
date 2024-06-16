@@ -1,5 +1,25 @@
 controllers:
     resource:
-        path: ../src/Controller/
-        namespace: App\Controller
+        path: ../src/Shared/Infrastructure/Controller/
+        namespace: App\Shared\Infrastructure\Controller
     type: attribute
+
+user_controllers:
+    resource:
+        path: ../src/User/Infrastructure/Http/Controller/
+        namespace: App\User\Infrastructure\Http\Controller
+
+    type: attribute
+
+data_controllers:
+    resource:
+        path: ../src/Storage/Infrastructure/Http/Controller/
+        namespace: App\Storage\Infrastructure\Http\Controller
+
+    type: attribute
+
+api_refresh_token:
+    path: /main-server/v1/refresh
+
+api_login_check:
+    path: /main-server/v1/login

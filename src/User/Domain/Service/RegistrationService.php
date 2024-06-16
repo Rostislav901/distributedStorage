@@ -1,8 +1,7 @@
 <?php
 
-namespace App\User\Application\Service;
+namespace App\User\Domain\Service;
 
-use App\User\Application\DTO\UserRegisterDTO;
 use App\User\Domain\Factory\UserFactory;
 use App\User\Domain\Repository\UserRepositoryInterface;
 use Lexik\Bundle\JWTAuthenticationBundle\Response\JWTAuthenticationSuccessResponse;
@@ -14,20 +13,19 @@ class RegistrationService
         private readonly AuthenticationSuccessHandler $successHandler,
         private readonly UserFactory $factory,
         private readonly UserRepositoryInterface $userRepository
-    )
-    {
+    ) {
     }
 
-    public function register(UserRegisterDTO $userRegisterDTO): JWTAuthenticationSuccessResponse
+    public function register(string $name, string $email, string $password): JWTAuthenticationSuccessResponse
     {
-         $user =  $this->factory->create(
-             name: $userRegisterDTO->name,
-             email: $userRegisterDTO->email,
-             password: $userRegisterDTO->password
-         );
+        $user = $this->factory->create(
+            name: $name,
+            email: $email,
+            password: $password
+        );
 
-         $this->userRepository->add($user);
+        $this->userRepository->add($user);
 
-         return  $this->successHandler->handleAuthenticationSuccess($user);
+        return $this->successHandler->handleAuthenticationSuccess($user);
     }
 }

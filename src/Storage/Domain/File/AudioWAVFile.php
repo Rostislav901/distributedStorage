@@ -2,10 +2,9 @@
 
 namespace App\Storage\Domain\File;
 
-class AudioMP3File extends AbstractBaseFile
+class AudioWAVFile extends AbstractBaseFile
 {
-
-    function getContent(): string
+    public function getContent(): string
     {
         // TODO: Implement getContent() method.
     }

@@ -5,13 +5,12 @@ namespace App\Storage\Domain\Service;
 use App\Storage\Domain\Factory\EventDocumentFactory;
 use Doctrine\ODM\MongoDB\DocumentManager;
 
-class EventDataMaker
+class EventDocumentMaker
 {
     public function __construct(
         private readonly EventDocumentFactory $eventDocumentFactory,
         private readonly DocumentManager $documentManager
-    )
-    {
+    ) {
     }
 
     public function makeEventDocument(
@@ -19,7 +18,7 @@ class EventDataMaker
         string $description,
         string $location,
         \DateTime $startTime,
-        \DateTime $endTime) : string
+        \DateTime $endTime): string
     {
         $event = $this->eventDocumentFactory->create($title, $description, $location, $startTime, $endTime);
 

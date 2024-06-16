@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Domain\Factory;
+namespace App\User\Domain\Factory;
 
-use App\Domain\Entity\User;
+use App\User\Domain\Entity\User;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 class UserFactory
@@ -12,12 +12,11 @@ class UserFactory
     }
 
     public function create(
-        string $name,string $email, string $password
-    ): User
-    {
-        $user =   new User($name,$email);
+        string $name, string $email, string $password
+    ): User {
+        $user = new User($name, $email);
 
-        $user->setPassword($password,$this->hasher);
+        $user->setPassword($password, $this->hasher);
 
         return $user;
     }
