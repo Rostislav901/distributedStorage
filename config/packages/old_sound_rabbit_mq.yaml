@@ -1,0 +1,19 @@
+old_sound_rabbit_mq:
+    connections:
+        default:
+            url: '%env(RABBITMQ_URL)%'
+            vhost: '/'
+            lazy: false
+            connection_timeout: 3
+            read_write_timeout: 3
+            keepalive: false
+            heartbeat: 60
+            use_socket: true
+
+    consumers:
+
+        handle_all_eventData_relation:
+            connection: default
+            exchange_options: { name: 'event.all_data_relation', type: direct }
+            queue_options: { name: 'event.all_data_relation_queue_server1' }
+            callback: app.amqp.consumer.event_data_to_relation_base_consumer
